@@ -1,0 +1,28 @@
+
+@active @smoke @test1
+Scenario: Read details of an existing client            [90m# src/test/resources/features/client_testing_crud.feature:5[0m
+  [32mGiven [0m[32mthere are registered clients in the system[0m      [90m# com.globant.test.api.stepDefinitions.ClientSteps.thereAreRegisteredClientsInTheSystem()[0m
+  [32mWhen [0m[32mI retrieve the details of the client with ID [0m[32m[1m"1"[0m [90m# com.globant.test.api.stepDefinitions.ClientSteps.sendGETRequest(java.lang.String)[0m
+  [32mThen [0m[32mthe response should have a status code of [0m[32m[1m200[0m    [90m# com.globant.test.api.stepDefinitions.ClientSteps.theResponseShouldHaveAStatusCodeOf(int)[0m
+  [32mAnd [0m[32mthe response should have the following details:[0m   [90m# com.globant.test.api.stepDefinitions.ClientSteps.theResponseShouldHaveTheFollowingDetails(io.cucumber.datatable.DataTable)[0m
+    | Name  | LastName | Country  | City   | Email            | Phone        | Id |
+    | Laura | Perez    | Colombia | Bogota | laura3@gmail.com | 1800-233-244 | 1  |
+  [32mAnd [0m[32mvalidates the response with client JSON schema[0m    [90m# com.globant.test.api.stepDefinitions.ClientSteps.userValidatesResponseWithClientJSONSchema()[0m
+
+@active @smoke
+Scenario: Update client details                              [90m# src/test/resources/features/client_testing_crud.feature:17[0m
+  [32mGiven [0m[32mthere are registered clients in the system[0m           [90m# com.globant.test.api.stepDefinitions.ClientSteps.thereAreRegisteredClientsInTheSystem()[0m
+  [32mAnd [0m[32mI retrieve the details of the client with ID [0m[32m[1m"1"[0m       [90m# com.globant.test.api.stepDefinitions.ClientSteps.sendGETRequest(java.lang.String)[0m
+  [32mWhen [0m[32mI send a PUT request to update the client with ID [0m[32m[1m"1"[0m [90m# com.globant.test.api.stepDefinitions.ClientSteps.iSendAPUTRequestToUpdateTheClientWithID(java.lang.String,java.lang.String)[0m
+  [32mThen [0m[32mthe response should have a status code of [0m[32m[1m200[0m         [90m# com.globant.test.api.stepDefinitions.ClientSteps.theResponseShouldHaveAStatusCodeOf(int)[0m
+  [32mAnd [0m[32mthe response should have the following details:[0m        [90m# com.globant.test.api.stepDefinitions.ClientSteps.theResponseShouldHaveTheFollowingDetails(io.cucumber.datatable.DataTable)[0m
+    | Name  | LastName | Country  | City   | Email            | Phone        | Id |
+    | Laura | Perez    | Colombia | Bogota | laura3@gmail.com | 1800-233-555 | 1  |
+  [32mAnd [0m[32mvalidates the response with client JSON schema[0m         [90m# com.globant.test.api.stepDefinitions.ClientSteps.userValidatesResponseWithClientJSONSchema()[0m
+
+@active @smoke @regression
+Scenario: Delete all registered clients                   [90m# src/test/resources/features/client_testing_crud.feature:38[0m
+  [32mGiven [0m[32mthere are registered clients in the system[0m        [90m# com.globant.test.api.stepDefinitions.ClientSteps.thereAreRegisteredClientsInTheSystem()[0m
+  [32mWhen [0m[32mI send a DELETE request to delete all the clients[0m  [90m# com.globant.test.api.stepDefinitions.ClientSteps.iSendADELETERequestToDeleteAllTheClients()[0m
+  [32mThen [0m[32mthe response should have a status code of [0m[32m[1m200[0m      [90m# com.globant.test.api.stepDefinitions.ClientSteps.theResponseShouldHaveAStatusCodeOf(int)[0m
+  [32mAnd [0m[32mvalidates the response with client list JSON schema[0m [90m# com.globant.test.api.stepDefinitions.ClientSteps.userValidatesResponseWithClientListJSONSchema()[0m
