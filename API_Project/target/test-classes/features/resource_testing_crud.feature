@@ -1,4 +1,3 @@
-@active
 Feature: Resource testing CRUD
 
   @smoke @test2
@@ -32,9 +31,9 @@ Feature: Resource testing CRUD
       | Chocolate | Nestle | 200 | 1.5   | Chocolate for pastries | Food | true | 15 |
       And validates the resource response with resource JSON schema
 
-  #This one was not necessary, but I didn't want to leave all the info that I created
-  #on the mockAPI
-  @smoke @regression
+   @smoke @regression
+
+
    Scenario: Delete all registered resources
     Given there are resources available
     When I send a DELETE request to delete all the resources

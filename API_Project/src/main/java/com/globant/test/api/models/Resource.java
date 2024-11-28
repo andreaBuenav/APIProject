@@ -14,8 +14,8 @@ public class Resource {
     private String id;
     private String name;
     private String trademark;
-    private int stock;
-    private float price;
+    private String stock;
+    private String price;
     private String description;
     private String tags;
     private boolean active;

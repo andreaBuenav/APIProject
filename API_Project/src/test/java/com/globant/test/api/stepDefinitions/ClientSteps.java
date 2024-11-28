@@ -47,6 +47,7 @@ public class ClientSteps {
                        .city(clientDataMap.get("City"))
                        .email(clientDataMap.get("Email"))
                        .phone(clientDataMap.get("Phone"))
+                       .gender(clientDataMap.get("Gender"))
                        .build();
         logger.info("Client mapped: " + client);
     }
@@ -104,6 +105,7 @@ public class ClientSteps {
         Assert.assertEquals(expectedDataMap.get("City"), client.getCity());
         Assert.assertEquals(expectedDataMap.get("Email"), client.getEmail());
         Assert.assertEquals(expectedDataMap.get("Phone"), client.getPhone());
+        Assert.assertEquals(expectedDataMap.get("Gender"), client.getGender());
         Assert.assertEquals(expectedDataMap.get("Id"), client.getId());
     }
     

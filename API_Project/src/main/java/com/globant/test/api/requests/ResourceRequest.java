@@ -1,10 +1,8 @@
 package com.globant.test.api.requests;
 
 import com.github.javafaker.Faker;
-import com.globant.test.api.models.Client;
 import com.globant.test.api.models.Resource;
 import com.globant.test.api.util.Constants;
-import com.globant.test.api.util.JsonFileReader;
 import com.google.gson.Gson;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.restassured.module.jsv.JsonSchemaValidator;
@@ -44,10 +42,14 @@ public class ResourceRequest extends BaseRequest{
      Update client by id
 
      @param resource model
-     @param resourceId string
      @return rest-assured response
      */
-    public Response updateResource(Resource resource, String resourceId) {
+    public Response updateResource(Resource resource, Boolean active) {
+        resource.setActive(active);
+        endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH, resource.getId());
+        return requestPut(endpoint, createBaseHeaders(), resource);
+    }
+    public Response updateResourceById(Resource resource, String resourceId){
         endpoint = String.format(Constants.URL_WITH_PARAM, Constants.RESOURCES_PATH, resourceId);
         return requestPut(endpoint, createBaseHeaders(), resource);
     }
@@ -64,16 +66,30 @@ public class ResourceRequest extends BaseRequest{
     }
 
 
+    /**
+     Get Resource entity
 
-    public Client getResourceEntity(@NotNull Response response) {
-        return response.as(Client.class);
+     @return rest-assured response
+     */
+    public Resource getResourceEntity(@NotNull Response response) {
+        return response.as(Resource.class);
     }
+
+    /**
+     Get a list of Resources entities
+
+     @return rest-assured response
+     */
 
     public List<Resource> getResourcesEntity(@NotNull Response response) {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getList("", Resource.class);
     }
 
+    /**
+     Create resource
+     @return new resource
+     */
 
     public Response createResources(){
         Resource resource = new Resource();
@@ -81,31 +97,38 @@ public class ResourceRequest extends BaseRequest{
         String name = faker.commerce().productName();
         resource.setName(name);
         resource.setTrademark(String.valueOf(faker.company().name()));
-        resource.setStock(Integer.parseInt(String.valueOf(faker.number())));
-        resource.setPrice(Float.parseFloat(String.valueOf(faker.commerce().price())));
+        resource.setStock(String.valueOf(faker.number()));
+        resource.setPrice(String.valueOf(faker.commerce().price()));
         resource.setDescription(String.valueOf(faker.lorem().paragraph()));
         resource.setTags(String.valueOf(faker.lorem().word()));
-        resource.setActive(Boolean.valueOf(String.valueOf(faker.bool())));
+        resource.setActive(Boolean.parseBoolean(String.valueOf(faker.bool().bool())));
 
-        return createResources();
+        return createResource(resource);
 
     }
 
     /**
-     Create client
+     Create resource
 
-     @param client model
+     @param resource model
      @return rest-assured response
      */
-    public Response createClient(Client client) {
-        endpoint = String.format(Constants.URL, Constants.CLIENTS_PATH);
-        return requestPost(endpoint, createBaseHeaders(), client);
+    public Response createResource(Resource resource) {
+        endpoint = String.format(Constants.URL, Constants.RESOURCES_PATH);
+        return requestPost(endpoint, createBaseHeaders(), resource);
     }
 
-    public Client getClientEntity(String clientJson) {
+    public Resource getResourceEntity(String resourceJson) {
         Gson gson = new Gson();
-        return gson.fromJson(clientJson, Client.class);
+        return gson.fromJson(resourceJson, Resource.class);
     }
+
+    /**
+     Validates resource schemas
+
+     @param schemaPath model
+     @return rest-assured response
+     */
 
     public boolean validateSchema(Response response, String schemaPath) {
         try {

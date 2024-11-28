@@ -2,38 +2,39 @@
   "type": "array",
   "items": {
     "properties": {
-      "name": {
+      "name" : {
         "type": "string"
       },
-      "lastName": {
+      "trademark": {
         "type": "string"
       },
-      "country": {
-        "type": "string"
-      },
-      "city": {
-        "type": "string"
-      },
-      "email": {
+      "stock": {
         "type":"string"
       },
-      "phone": {
+      "price": {
         "type": "string"
       },
-      "gender": {
+      "description": {
+        "type":"string"
+      },
+      "tags": {
         "type": "string"
+      },
+      "active": {
+        "type": "boolean"
       },
       "id": {
         "type": "string"
       }
     },
-    "required": [
+    "required":[
       "name",
-      "lastName",
-      "country",
-      "city",
-      "email",
-      "phone",
+      "trademark",
+      "stock",
+      "price",
+      "description",
+      "tags",
+      "active",
       "id"
     ]
   }
