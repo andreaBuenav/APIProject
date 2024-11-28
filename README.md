@@ -11,7 +11,7 @@
 
 ### Description
 This is an API automatio project for this [ MockApi path](https://673bdac096b8dcd5f3f7afdb.mockapi.io/api/v1/clients).<br/>
-We will test the methods get, put, post and delete, for clients and resources br/><br/>
+We will test the methods get, put, post and delete, for clients and resources <br/><br/>
 
 ### Disclaimers
 1. The project is made with an openjdk-23.<br/>
