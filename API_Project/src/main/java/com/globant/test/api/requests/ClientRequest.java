@@ -78,6 +78,7 @@ public class ClientRequest extends BaseRequest {
         JsonFileReader jsonFile = new JsonFileReader();
         return this.createClient(jsonFile.getClientByJson(Constants.DEFAULT_CLIENT_FILE_PATH));
     }
+
     public Response createMoreClients(){
         Client client = new Client();
         Faker faker = new Faker();
