@@ -9,7 +9,10 @@ import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class ClientRequest extends BaseRequest {
     
@@ -62,22 +65,43 @@ public class ClientRequest extends BaseRequest {
         return requestDelete(endpoint, createBaseHeaders());
     }
 
-
+    /**
+     Get client entity
+     @return rest-assured response
+     */
 
     public Client getClientEntity(@NotNull Response response) {
         return response.as(Client.class);
     }
+    /**
+     Get a list of clients entities
+     @return rest-assured response
+     */
     
     public List<Client> getClientsEntity(@NotNull Response response) {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getList("", Client.class);
     }
 
+    /**
+     Create default client
+     @return new client
+     */
     
     public Response createDefaultClient() {
         JsonFileReader jsonFile = new JsonFileReader();
         return this.createClient(jsonFile.getClientByJson(Constants.DEFAULT_CLIENT_FILE_PATH));
     }
+    public static String generateRandomGender() {
+        List<String> genders = Arrays.asList("Male", "Female");
+        Random random = new Random();
+        return genders.get(random.nextInt(genders.size()));
+    }
+
+    /**
+     Create client
+     @return new client
+     */
 
     public Response createMoreClients(){
         Client client = new Client();
@@ -90,14 +114,13 @@ public class ClientRequest extends BaseRequest {
         client.setCity(String.valueOf(faker.address().cityName()));
         client.setEmail(String.valueOf(faker.internet().emailAddress()));
         client.setPhone(String.valueOf(faker.phoneNumber()));
-
+        client.setGender(generateRandomGender());
         return this.createClient(client);
 
     }
     
     /**
      Create client
-     
      @param client model
      @return rest-assured response
      */
@@ -105,12 +128,23 @@ public class ClientRequest extends BaseRequest {
         endpoint = String.format(Constants.URL, Constants.CLIENTS_PATH);
         return requestPost(endpoint, createBaseHeaders(), client);
     }
+    /**
+     Get Entity
+     @param clientJson model
+     @return Gson fromJson
+     */
     
     public Client getClientEntity(String clientJson) {
         Gson gson = new Gson();
         return gson.fromJson(clientJson, Client.class);
     }
-    
+
+    /**
+     Validates resource schemas
+
+     @param schemaPath model
+     @return rest-assured response
+     */
     public boolean validateSchema(Response response, String schemaPath) {
         try {
             response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath));

@@ -16,6 +16,7 @@ public class Client {
     private String city;
     private String email;
     private String phone;
+    private String gender;
     private String id;
 
 }

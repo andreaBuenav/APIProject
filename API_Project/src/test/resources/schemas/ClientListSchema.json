@@ -20,6 +20,9 @@
       "phone": {
         "type": "string"
       },
+      "gender": {
+        "type": "string"
+      },
       "id": {
         "type": "string"
       }
