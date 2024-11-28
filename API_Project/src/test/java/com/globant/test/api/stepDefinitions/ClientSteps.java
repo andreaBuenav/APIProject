@@ -63,9 +63,10 @@ public class ClientSteps {
         response = clientRequest.getClients();
     }
     
-    @When("I send a POST request to create a client")
+    @Given("I send a POST request to create a client")
     public void iSendAPOSTRequestToCreateAClient() {
-        response = clientRequest.createClient(client);
+        response = clientRequest.createMoreClients();
+
     }
     
     @When("I send a DELETE request to delete all the clients")
